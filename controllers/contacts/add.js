@@ -1,18 +1,10 @@
-const {contactSchema} = require("../../validation");
-const contactsOperations = require("../../model/contacts");
+const {Contact} = require("../../models");
 
-const add = async (req, res)=> {
+const add = async (req, res, next)=> {
     try {
-        console.log(req.body);
-        const {error} = contactSchema.validate(req.body);
-        if(error){
-            return res.status(400).json({
-                message: error.message
-            })
-        }
-        const newContact = await contactsOperations.add(req.body);
+        const result = await Contact.create(req.body);
         res.status(201).json({
-            newContact
+            result
         });
     }
     catch(error){
