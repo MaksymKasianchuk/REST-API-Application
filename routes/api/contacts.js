@@ -8,20 +8,20 @@ const contactValidationMiddleware = validation(joiSchema);
 const router = express.Router();
 
 // GET /api/contacts
-router.get('/', controllerWrapper(authenticate), ctrl.getAll);
+router.get('/', ctrl.getAll);
 
 // GET /api/contacts/10
-router.get('/:id', controllerWrapper(authenticate), ctrl.getById);
+router.get('/:id', ctrl.getById);
 
 // POST /api/contacts
-router.post('/', controllerWrapper(authenticate), contactValidationMiddleware, ctrl.add);
+router.post('/', controllerWrapper(authenticate), contactValidationMiddleware, controllerWrapper(ctrl.add));
 
 // DELETE /api/contacts/10
-router.delete('/:id', controllerWrapper(authenticate), ctrl.delById);
+router.delete('/:id', controllerWrapper(authenticate), controllerWrapper(ctrl.delById));
 
 // PUT /api/contacts/10
-router.put('/:id', controllerWrapper(authenticate), contactValidationMiddleware, ctrl.updateById);
+router.put('/:id', controllerWrapper(authenticate), contactValidationMiddleware, controllerWrapper(ctrl.updateById));
 
-router.patch("/:id/favorite", controllerWrapper(authenticate), ctrl.updateStatusContact);
+router.patch("/:id/favorite", controllerWrapper(authenticate), controllerWrapper(ctrl.updateStatusContact));
 
 module.exports = router;
